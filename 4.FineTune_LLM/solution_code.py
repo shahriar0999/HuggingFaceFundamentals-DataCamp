@@ -89,3 +89,27 @@ for i, predicted_label in enumerate(predicted_labels):
     print(f"\n Input Text {i + 1}: {input_text[i]}")
     print(f"Predicted Label: {predicted_label}")
 
+"""
+Transfer learning with one-shot learning
+Transfer learning has many approaches, one of them being one-shot learning, where a model is trained using one example it has seen.
+
+Set up a one-shot learning example for the model.
+"""
+
+
+
+# Include an example in the input ext
+input_text = """
+Text: "The dinner we had was great and the service too."
+Classify the sentiment of this sentence as either positive or negative.
+Example:
+Text: "The food was delicious"
+Sentiment: Positive
+Text: "The dinner we had was great and the service too."
+Sentiment:
+"""
+
+# Apply the example to the model
+result = model(input_text, max_length=100)
+
+print(result[0]["label"])
