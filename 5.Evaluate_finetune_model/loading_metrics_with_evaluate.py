@@ -151,3 +151,20 @@ reference = ["The rabbit-hole went straight on like a tunnel for some way, and t
 # Compute and print the METEOR score
 results = meteor.compute(predictions=generated, references=reference)
 print("Meteor: ", results['meteor'])
+
+
+"""
+Evaluating with EM
+Exact Match helps us evaluate models when it comes to extractive question and answering but looking for, you guessed it, exact matches! Once again, you have been provided some predictions and references for evaluation. The evaluate library has been loaded for you.
+"""
+
+
+# Load the metric
+exact_match = evaluate.load('exact_match')
+
+predictions = ["It's a wonderful day", "I love dogs", "DataCamp has great AI courses", "Sunshine and flowers"]
+references = ["What a wonderful day", "I love cats", "DataCamp has great AI courses", "Sunsets and flowers"]
+
+# Compute the exact match and print the results
+results = exact_match.compute(predictions=predictions, references=references)
+print("EM results: ", results)
