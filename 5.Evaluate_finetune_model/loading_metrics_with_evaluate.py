@@ -70,3 +70,51 @@ print("Generated Text: ", generated_text)
 perplexity = evaluate.load("perplexity", module_type="metric")
 results = perplexity.compute(model_id="gpt2", predictions=generated_text)
 print("Perplexity: ", results['mean_perplexity'])
+
+
+"""
+BLEU translations
+Let's get familiar with the BLEU metric.
+
+A pipeline based on the Helsinki-NLP Spanish-English translation model and the BLEU metric has been loaded for you, using evaluate.load("bleu") from the evaluate library.
+
+Given the following inputs and references for evaluation:
+
+input_sentence_1 = "Hola, ¿cómo estás?"
+
+reference_1 = [
+     ["Hello, how are you?", "Hi, how are you?"]
+     ]
+
+input_sentences_2 = ["Hola, ¿cómo estás?", "Estoy genial, gracias."]
+
+references_2 = [
+     ["Hello, how are you?", "Hi, how are you?"],
+     ["I'm great, thanks.", "I'm great, thank you."]
+     ]
+"""
+
+translator = pipeline("translation", model="Helsinki-NLP/opus-mt-es-en")
+
+# Translate the first input sentence then calucate the BLEU metric for translation quality
+translated_output = translator(input_sentence_1)
+
+translated_sentence = translated_output[0]['translation_text']
+
+print("Translated:", translated_sentence)
+
+results = bleu.compute(predictions=[translated_sentence], references=reference_1)
+print(results)
+
+
+
+# Translate the input sentences, extract the translated text, and compute BLEU score
+translator = pipeline("translation", model="Helsinki-NLP/opus-mt-es-en")
+
+translated_outputs = translator(input_sentences_2)
+
+predictions = [translated_output['translation_text'] for translated_output in translated_outputs]
+print(predictions)
+
+results = bleu.compute(predictions=predictions, references=references_2)
+print(results)
