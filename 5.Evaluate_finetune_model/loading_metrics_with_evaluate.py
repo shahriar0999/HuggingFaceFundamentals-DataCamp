@@ -118,3 +118,20 @@ print(predictions)
 
 results = bleu.compute(predictions=predictions, references=references_2)
 print(results)
+
+
+"""
+Evaluating with ROUGE
+ROUGE is commonly used to evaluate summarization tasks as it checks for similarities between predictions and references. You have been provided with a model-generated summary, predictions, and a references summary for validate. Calculate the scores to see how well the model performed.
+
+The evaluate library has been loaded for you."""
+
+# Load the rouge metric
+rouge = evaluate.load('rouge')
+
+predictions = ["""Pluto is a dwarf planet in our solar system, located in the Kuiper Belt beyond Neptune, and was formerly considered the ninth planet until its reclassification in 2006."""]
+references = ["""Pluto is a dwarf planet in the solar system, located in the Kuiper Belt beyond Neptune, and was previously deemed as a planet until it was reclassified in 2006."""]
+
+# Calculate the rouge scores between the predicted and reference summaries
+results = rouge.compute(predictions=predictions, references=references)
+print("ROUGE results: ", results)
