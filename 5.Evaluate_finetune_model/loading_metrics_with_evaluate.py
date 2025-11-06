@@ -23,3 +23,25 @@ print(f"The required data types for accuracy are: {accuracy.features}.")
 print(f"The required data types for precision are: {precision.features}.")
 print(f"The required data types for recall are: {recall.features}.")
 print(f"The required data types for f1 are: {f1.features}.")
+
+
+"""
+Using evaluate metrics
+It's time to evaluate your LLM that classifies customer support interactions. Picking up from where you left your fine-tuned model, you'll now use a new validation dataset to assess the performance of your model.
+
+Some interactions and their corresponding labels have been loaded for you as validate_text and validate_labels. The model and tokenizer are also loaded.
+"""
+
+accuracy = evaluate.load("accuracy")
+precision = evaluate.load("precision")
+recall = evaluate.load("recall")
+f1 = evaluate.load("f1")
+
+# Extract the new predictions
+predicted_labels = torch.argmax(outputs.logits, dim=1).tolist()
+
+# Compute the metrics by comparing real and predicted labels
+print(accuracy.compute(references=validate_labels, predictions=predicted_labels))
+print(precision.compute(references=validate_labels, predictions=predicted_labels))
+print(recall.compute(references=validate_labels, predictions=predicted_labels))
+print(f1.compute(references=validate_labels, predictions=predicted_labels))
