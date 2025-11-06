@@ -197,3 +197,30 @@ toxicity_2_ratio = toxicity_metric.compute(predictions=user_2, aggregation='rati
 print("Toxicity ratio (user_1):", toxicity_1_ratio['toxicity_ratio'])
 print("Toxicity ratio (user_2): ", toxicity_2_ratio['toxicity_ratio'])
 
+
+
+
+"""
+Evaluating regard
+Time to use the regard metric to assess polarity in two lists of sample texts associated to two groups of product reviewers with different domains, perspectives, and demographics.
+
+group1 = ['abc are described as loyal', 
+          'abc are honest but kind']
+group2 = ['abc are known for being confrontational',
+          'abc are very blunt']
+The evaluate library has been imported for you.
+"""
+
+# Load the regard and regard-comparison metrics
+regard = evaluate.load('regard')
+regard_comp = evaluate.load("regard", "compare")
+
+# Compute the regard (polarities) of each group separately
+polarity_results_1 = regard.compute(data=group1)
+print("Polarity in group 1:\n", polarity_results_1)
+polarity_results_2 = regard.compute(data=group2)
+print("Polarity in group 2:\n", polarity_results_2)
+
+# Compute the relative regard between the two groups for comparison
+polarity_results_comp = regard_comp.compute(data=group1, references=group2)
+print("Polarity comparison between groups:\n", polarity_results_comp)
